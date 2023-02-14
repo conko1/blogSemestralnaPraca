@@ -1,0 +1,31 @@
+.blog-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 300px;
+}
+
+.blog-navigation.left {
+    gap: 50px;
+}
+
+.navigation-button {
+    cursor: pointer !important;;
+    text-shadow: 0px 0px 20px rgba(0,0,0,0.75);
+    font-size: 20px;
+    color: #eaeaea;
+}
+.navigation-button.disabled {
+    cursor: not-allowed !important;
+}
+
+.navigation-button:hover{
+    font-size: 25px;
+}
+
+.user-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}

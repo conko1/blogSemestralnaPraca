@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/blog/blog_comments_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'user_manager/style/form_style.css' %}">
+    <h2>Komentáre blogu: {{ post_title }}</h2>
+    {% if comments.count == 0 %}
+        <div style="text-align: center; margin-top: 15px">
+            Neexistuje žiadny pridaný komentár. Buďte prvý, kto okomentuje tento blog!
+        </div>
+    {% endif %}
+    <div class="comment-wrapper">
+        {% for comment in comments %}
+            <div class="comment-block">
+                <div class="comment-user">
+                    Komentár od používateľa:<span class="username-text"> {{ comment.user.username }}</span>
+                </div>
+                <div class="comment-content">
+                    {{ comment }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <form method="post" style="margin-top: 35px">
+    {% csrf_token %}
+        <table>
+            {% for field in form %}
+                <tr>
+                    <td>
+                        {{ field.label_tag }}
+                    </td>
+                    <td>
+                        {{ field }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <button class="submit-comment-button" type="submit">Uverejniť komentár</button>
+    </form>
+{% endblock %}

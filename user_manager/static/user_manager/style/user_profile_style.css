@@ -1,0 +1,16 @@
+.user-profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 110px;
+    padding-right: 10px;
+}
+
+.user-name {
+    font-size: 20px;
+}
+
+.user-icon {
+    margin: 5px;
+    width: 50px;
+}

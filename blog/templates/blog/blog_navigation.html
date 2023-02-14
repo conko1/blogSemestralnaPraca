@@ -1,0 +1,89 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'style/blog/blog_navigation_style.css' %}">
+
+<div class="blog-navigation">
+    <div class="blog-navigation left">
+        {% if user.is_authenticate %}
+            <a href="{% url 'blog:create' %}" style="text-decoration: none">
+                <span
+                    class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                    title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+                >
+                    + Nový blog
+                </span>
+            </a>
+            <a href="{% url 'blog:blogs' %}" style="text-decoration: none">
+                <span
+                        class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                        title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+                >
+                    Všetky blogy
+                </span>
+            </a>
+            <a href="{% url 'blog:user_specific' %}" style="text-decoration: none">
+                <span
+                    class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                    title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+                >
+                    Moje blogy
+                </span>
+            </a>
+            <a href="{% url 'blog:liked' %}" style="text-decoration: none">
+                <span
+                    class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                    title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+                >
+                    Obľúbené blogy
+                </span>
+            </a>
+        {% else %}
+            <span
+                class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+            >
+                + Nový blog
+            </span>
+            <span
+                    class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                    title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+            >
+                Všetky blogy
+            </span>
+            <span
+                class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+            >
+                Moje blogy
+            </span>
+            <span
+                class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
+                title="{% if not user.is_authenticated %}Pre zobrazenie blogov sa musíte prihlásiť.{% endif %}"
+            >
+                Obľúbené blogy
+            </span>
+        {% endif %}
+    </div>
+    <div class="blog-navigation right">
+        {% if user.is_authenticated %}
+            <div class="user-section">
+                {% include "user_manager/logout_button.html" %}
+                {% include "user_manager/user_profile.html" %}
+            </div>
+        {% else %}
+            {% if request.path == '/login/'%}
+                <a href="{% url 'user_manager:register' %}" style="text-decoration: none;">
+                    <span class="navigation-button">
+                        Registrovať
+                    </span>
+                </a>
+            {% else %}
+                <a href="{% url 'user_manager:login' %}" style="text-decoration: none;">
+                    <span class="navigation-button">
+                        Prihlásiť
+                    </span>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

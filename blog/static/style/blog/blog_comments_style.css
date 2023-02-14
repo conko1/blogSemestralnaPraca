@@ -1,0 +1,40 @@
+.submit-comment-button {
+    border: black 1px solid;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 135px;
+    height: 30px;
+}
+
+.comment-block {
+    border: black 1px solid;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.comment-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-user {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: black 1px solid;
+}
+
+.comment-content {
+    padding: 10px;
+}
+
+.username-text {
+    margin-left: 15px;
+    font-weight: 700;
+}
+
+.blog-body {
+    padding: 10px;
+    max-height: 300px;
+}

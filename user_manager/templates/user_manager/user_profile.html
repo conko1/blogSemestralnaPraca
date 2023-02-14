@@ -1,0 +1,9 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'user_manager/style/user_profile_style.css' %}">
+<div class="user-profile">
+    <span class="user-name">
+        {{ user.username }}
+    </span>
+    <img class="user-icon" src="{% static "user_manager/images/user_icon.png" %}" alt="">
+</div>
+

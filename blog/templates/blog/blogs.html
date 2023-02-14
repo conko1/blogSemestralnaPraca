@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/blog/blogs_style.css' %}">
+
+    <h1>{% if request.path == '/blog/my/' %}Moje blogy{% elif request.path == '/blog/liked/' %}Obľúbené blogy{% else %}Blogy{% endif %}</h1>
+    <div class="blogs-wrapper">
+        {% if blogs.count == 0 %}
+            {% if request.path != '/blog/liked/'%}
+                <div style="text-align: center">
+                    Neexistuje žiadny pridaný blog. Ak si želáte vytoriť prvý blok klikni sem alebo klikni na "+ Nový blog" v navigačnom panely na vrchu stránky
+                </div>
+            {% else %}
+                <div class="information-text">
+                    <div style="text-align: center">
+                        Ešte ste nepridali "obľúbený" na žiadny blog. Pre pridaniedo obľúbených je potrebné zakliknúť
+                    </div>
+                    <img class="blog-header-icon information" src="{% static 'images/blog_liked_icon.png' %}" alt="">
+                </div>
+            {% endif %}
+        {% endif %}
+        {% for blog in blogs %}
+            <div class="blog-wrapper">
+                <div class="blog-title">
+                    <span>
+                        {{ blog }}:
+                    </span>
+                    <div>
+                        {% if request.path == '/blog/my/' %}
+                            <button id="remove-blog-{{ blog.id }}" class="image-button" data-blog-id="{{ blog.id }}">
+                                <img class="blog-header-icon" src="{% static 'images/blog_delete_icon.png' %}" alt="">
+                            </button>
+                        {% endif %}
+                        <a href="{% url 'blog:detail' blog.id %}" style="text-decoration: none; margin-right: 10px">
+                            <img class="blog-header-icon" src="{% static 'images/view_blog_icon.png' %}" alt="">
+                        </a>
+                        {% if blog.id in liked_blogs %}
+                            <button id="like-blog-{{ blog.id }}" class="image-button" data-blog-id="{{ blog.id }}">
+                                <img class="blog-header-icon" src="{% static 'images/blog_liked_icon.png' %}" alt="">
+                            </button>
+                        {% else %}
+                            <button id="like-blog-{{ blog.id }}" class="image-button" data-blog-id="{{ blog.id }}">
+                                <img class="blog-header-icon" src="{% static 'images/blog_not_liked_icon.png' %}" alt="">
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="blog-body">
+                    {{ blog.content | slice:"0:300" }}{% if blog.content|length > 300 %}...{% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('[id^="like-blog-"]').click(function() {
+            const blog_id = $(this).data('blog-id');
+            $.ajax({
+                type: "POST",
+                url: "{{ request.path }}",
+                data: { csrfmiddlewaretoken: "{{ csrf_token }}", blog_id: blog_id },
+                success: function() {
+                    window.location.href = window.location.href;
+                }
+            });
+        });
+        $('[id^="remove-blog-"]').click(function() {
+            const blog_id = $(this).data('blog-id');
+            $.ajax({
+                type: "DELETE",
+                url: "{{ request.path }}",
+                headers: {
+                    "X-CSRFTOKEN": "{{ csrf_token }}"
+                },
+                data: { blog_id: blog_id },
+                dataType: "json",
+                success: function() {
+                    window.location.href = window.location.href;
+                }
+            });
+        });
+    </script>
+{% endblock %}
