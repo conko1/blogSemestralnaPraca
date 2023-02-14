@@ -4,7 +4,7 @@
 
 <div class="blog-navigation">
     <div class="blog-navigation left">
-        {% if user.is_authenticate %}
+        {% if user.is_authenticated %}
             <a href="{% url 'blog:create' %}" style="text-decoration: none">
                 <span
                     class="{% if user.is_authenticated %}navigation-button{% else %}navigation-button disabled{% endif %}"
