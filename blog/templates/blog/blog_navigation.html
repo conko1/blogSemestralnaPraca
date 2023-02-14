@@ -71,7 +71,7 @@
                 {% include "user_manager/user_profile.html" %}
             </div>
         {% else %}
-            {% if request.path == '/login/'%}
+            {% if request.path == '/login/' or request.path == '/'%}
                 <a href="{% url 'user_manager:register' %}" style="text-decoration: none;">
                     <span class="navigation-button">
                         Registrovať
